@@ -1,0 +1,45 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    name: Publish release assets
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Checkout release assets
+        uses: actions/checkout@v4
+        with:
+          ref: release-assets
+          path: release-assets
+      - name: Verify assets
+        run: |
+          set -euo pipefail
+          test -s release-assets/PC-Wake-1.0.0-release.apk
+          test -s release-assets/PC-Wake-Agent-1.0.0.msi
+          sha256sum release-assets/PC-Wake-1.0.0-release.apk release-assets/PC-Wake-Agent-1.0.0.msi
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          if gh release view "${GITHUB_REF_NAME}" >/dev/null 2>&1; then
+            gh release upload "${GITHUB_REF_NAME}" \
+              release-assets/PC-Wake-1.0.0-release.apk \
+              release-assets/PC-Wake-Agent-1.0.0.msi \
+              --clobber
+          else
+            gh release create "${GITHUB_REF_NAME}" \
+              release-assets/PC-Wake-1.0.0-release.apk \
+              release-assets/PC-Wake-Agent-1.0.0.msi \
+              --verify-tag \
+              --title "PC Wake Controller v1.0.0" \
+              --notes-file RELEASE_NOTES_v1.0.0.md \
+              --latest
+          fi
