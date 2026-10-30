@@ -1,5 +1,7 @@
 # PC Wake Controller
 
+[![CI](https://github.com/A-124/pc-wake-controller/actions/workflows/ci.yml/badge.svg)](https://github.com/A-124/pc-wake-controller/actions/workflows/ci.yml)
+
 A free, self-hosted Android + Windows system for waking Windows PCs over the
 LAN or mobile data and controlling shutdown, restart and sleep with
 authenticated commands. No subscription, ads, mandatory cloud, or paid WoL API.
@@ -34,16 +36,19 @@ authenticated commands. No subscription, ads, mandatory cloud, or paid WoL API.
 
 ## Download
 
-Prebuilt **v1.0.0** artifacts (unsigned, debug APK) are attached to the
+Prebuilt **v1.0.0** artifacts are attached to the
 [GitHub release](https://github.com/A-124/pc-wake-controller/releases/tag/v1.0.0):
 
 | Artifact | SHA-256 |
 |---|---|
-| `PC-Wake-1.0.0-debug.apk` | `546bd2570ef8ddba818af0c3a3a1a65afc20bfc9fd738364416e76d15db031a3` |
-| `PC-Wake-Agent-1.0.0.msi` | `3ebeee245688da56f1286b3f214edcbe31086da3a6989c868a1a6fff9f00dc09` |
+| `PC-Wake-1.0.0-release.apk` (signed release) | `4a704a3b6252199d0a27224bd3494cb146f99cb0a221cf1fffd411ea7d568987` |
+| `PC-Wake-Agent-1.0.0.msi` (unsigned) | `3ebeee245688da56f1286b3f214edcbe31086da3a6989c868a1a6fff9f00dc09` |
 
-The APK is debug-signed and the MSI is not code-signed. Verify the hashes and
-review the source before installing. Do not accept a certificate pin mismatch.
+The release APK is signed with the project release key; verify its signer
+fingerprint (`B9:22:35…:FB:D4`) against
+[RELEASE_SIGNING](documentation/RELEASE_SIGNING.md). The Windows MSI is not
+code-signed (no Authenticode certificate is available); verify its hash and
+review the source. Do not accept a certificate pin mismatch.
 
 ## Quick start
 

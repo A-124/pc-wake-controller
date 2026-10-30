@@ -50,17 +50,21 @@ No test invokes real power operations.
 
 | Artifact | Result | SHA-256 |
 |---|---|---|
-| `PC-Wake-1.0.0-debug.apk` | Built, `aapt2` manifest verified, installed on physical phone | `546bd2570ef8ddba818af0c3a3a1a65afc20bfc9fd738364416e76d15db031a3` |
+| `PC-Wake-1.0.0-release.apk` | R8-minified release build; `apksigner` verifies certificate `B9:22:35…:FB:D4`; package `io.pcwake.controller` | `4a704a3b6252199d0a27224bd3494cb146f99cb0a221cf1fffd411ea7d568987` |
+| `PC-Wake-1.0.0-debug.apk` | Debug build used for the physical-phone UI/pairing test; manifest verified | `546bd2570ef8ddba818af0c3a3a1a65afc20bfc9fd738364416e76d15db031a3` |
 | `PC-Wake-Agent-1.0.0.msi` | WiX v5 build; service registration, firewall and Start Menu shortcut included | `3ebeee245688da56f1286b3f214edcbe31086da3a6989c868a1a6fff9f00dc09` |
 
-The APK is debug-signed and the MSI is not code-signed (no code-signing
-certificate was available). Verify hashes before installing; a public release
-should add a signing certificate.
+The release APK is signed with the project’s private release key (public
+certificate in `documentation/pcwake-release-cert.pem`). The debug APK uses the
+throwaway debug key. The MSI is not Authenticode-signed because no code-signing
+certificate is available; verify its hash and build from source if required.
 
 ## End-to-end verification performed
 
-- Installed the APK through ADB on a physical Android phone and launched all
+- Installed the debug APK through ADB on a physical Android phone and launched all
   main flows (dashboard, Add/Edit PC, pairing, details, diagnostics scaffolding).
+- Built and signature-verified the R8-minified, release-signed APK; the release
+  application ID `io.pcwake.controller` is separate from the debug build.
 - Installed the Windows agent MSI, started the service, and verified local
   `/health` over HTTPS.
 - Paired the phone using host, one-time code and the exact certificate
