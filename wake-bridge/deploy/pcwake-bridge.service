@@ -1,0 +1,57 @@
+[Unit]
+Description=PC Wake Controller Wake Bridge
+Documentation=file:/opt/pcwake-bridge/README.md
+After=network-online.target
+Wants=network-online.target
+StartLimitIntervalSec=60
+StartLimitBurst=5
+
+[Service]
+Type=simple
+# Dedicated system user created by deploy/install.sh (not DynamicUser, because
+# the admin CLI must be able to read the 0600 admin.json in the state dir).
+User=pcwake
+Group=pcwake
+WorkingDirectory=/opt/pcwake-bridge
+ExecStart=/usr/bin/env node /opt/pcwake-bridge/src/index.js --config /etc/pcwake-bridge/config.json
+Restart=on-failure
+RestartSec=3
+TimeoutStopSec=15
+KillSignal=SIGTERM
+
+# Persistent state: devices.json, admin.json and audit.log live here.
+StateDirectory=pcwake-bridge
+StateDirectoryMode=0700
+ReadWritePaths=/var/lib/pcwake-bridge
+
+# Hardening. The public HTTPS listener and the loopback-only admin listener
+# are the only sockets; the bridge never needs elevated capabilities.
+NoNewPrivileges=yes
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectSystem=strict
+ProtectHome=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectKernelLogs=yes
+ProtectControlGroups=yes
+ProtectClock=yes
+ProtectHostname=yes
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6 AF_NETLINK
+RestrictNamespaces=yes
+RestrictRealtime=yes
+RestrictSUIDSGID=yes
+LockPersonality=yes
+SystemCallArchitectures=native
+SystemCallFilter=@system-service
+SystemCallErrorNumber=EPERM
+CapabilityBoundingSet=
+AmbientCapabilities=
+UMask=0077
+LimitNOFILE=4096
+
+# Note: MemoryDenyWriteExecute is intentionally not enabled because Node.js
+# requires writable+executable memory for its V8 JIT.
+
+[Install]
+WantedBy=multi-user.target

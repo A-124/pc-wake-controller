@@ -1,0 +1,27 @@
+{
+  "name": "Home Wake Bridge",
+  "listenHost": "0.0.0.0",
+  "listenPort": 8443,
+  "publicHost": "192.168.1.10",
+  "tlsCertPath": "./certs/bridge-cert.pem",
+  "tlsKeyPath": "./certs/bridge-key.pem",
+  "stateDir": "./state",
+  "adminPort": 47111,
+  "targets": [
+    {
+      "id": "gaming-pc",
+      "name": "Gaming PC",
+      "mac": "AA:BB:CC:DD:EE:FF",
+      "broadcast": "192.168.1.255",
+      "port": 9,
+      "repeats": 3
+    }
+  ],
+  "rateLimits": {
+    "authPerMinutePerDevice": 60,
+    "authFailuresPerMinutePerIp": 10,
+    "wakesPerMinutePerDevice": 20,
+    "pairAttemptsPerMinutePerIp": 30
+  },
+  "auditMaxBytes": 5242880
+}

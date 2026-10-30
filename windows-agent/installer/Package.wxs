@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs"
+     xmlns:fire="http://wixtoolset.org/schemas/v4/wxs/firewall">
+
+  <Package Name="PC Wake Controller Agent"
+           Manufacturer="PC Wake Controller"
+           Version="$(var.Version)"
+           UpgradeCode="7D7E3E5A-2B67-4A9B-9F5C-6C1A2E3D4F50"
+           Language="1033"
+           Scope="perMachine"
+           Compressed="yes">
+
+    <SummaryInformation Description="PC Wake Controller Windows agent and tray companion" Manufacturer="PC Wake Controller" />
+    <MajorUpgrade DowngradeErrorMessage="A newer version of PC Wake Controller Agent is already installed." />
+    <MediaTemplate EmbedCab="yes" CompressionLevel="high" />
+
+    <Feature Id="Main" Title="PC Wake Controller Agent" Level="1">
+      <ComponentGroupRef Id="ApplicationComponents" />
+    </Feature>
+
+    <StandardDirectory Id="ProgramFiles64Folder">
+      <Directory Id="INSTALLFOLDER" Name="PcWake Agent" />
+    </StandardDirectory>
+
+    <StandardDirectory Id="ProgramMenuFolder">
+      <Directory Id="ProgramMenuDir" Name="PC Wake Controller" />
+    </StandardDirectory>
+  </Package>
+
+  <Fragment>
+    <ComponentGroup Id="ApplicationComponents" Directory="INSTALLFOLDER">
+      <Component Id="AgentServiceComponent" Guid="4B2F0B62-6D1A-4D5B-9B1F-2B1D9F0A7C11">
+        <File Id="AgentServiceExe"
+              Source="$(var.ServicePublishDir)\PcWake.Agent.Service.exe"
+              KeyPath="yes" />
+        <ServiceInstall Id="PcWakeAgentServiceInstall"
+                        Name="PcWakeAgent"
+                        DisplayName="PC Wake Controller Agent"
+                        Description="Authenticated HTTPS control and LAN discovery for PC Wake Controller."
+                        Type="ownProcess"
+                        Start="auto"
+                        ErrorControl="normal"
+                        Account="LocalSystem" />
+        <ServiceControl Id="PcWakeAgentServiceControl"
+                        Name="PcWakeAgent"
+                        Start="install"
+                        Stop="both"
+                        Remove="uninstall"
+                        Wait="yes" />
+      </Component>
+
+      <Component Id="TrayComponent" Guid="9A8E5A44-5F0E-4B4B-8B3C-5A2E9C7D1F22">
+        <File Id="TrayExe"
+              Source="$(var.TrayPublishDir)\PcWake.Agent.Tray.exe"
+              KeyPath="yes" />
+      </Component>
+
+      <Component Id="TrayShortcutComponent" Directory="ProgramMenuDir" Guid="F4A1D3C2-7E95-4C8B-9D26-3B7E5A1C9D44">
+        <Shortcut Id="TrayStartMenuShortcut"
+                  Name="PC Wake Agent"
+                  Description="Pair this PC, view agent status and cancel pending power actions"
+                  Target="[INSTALLFOLDER]PcWake.Agent.Tray.exe"
+                  WorkingDirectory="INSTALLFOLDER" />
+        <RegistryValue Root="HKLM"
+                       Key="Software\PcWakeController\Agent"
+                       Name="TrayShortcut"
+                       Type="integer"
+                       Value="1"
+                       KeyPath="yes" />
+      </Component>
+
+      <Component Id="FirewallComponent" Guid="C1C9C6D9-0D1E-4A62-BF61-7A3E2F4D8C33">
+        <fire:FirewallException Id="FirewallHttpsTcpDomain"
+                                Name="PC Wake Controller Agent HTTPS (Domain)"
+                                Port="47101"
+                                Protocol="tcp"
+                                Profile="domain"
+                                Scope="any" />
+        <fire:FirewallException Id="FirewallHttpsTcpPrivate"
+                                Name="PC Wake Controller Agent HTTPS (Private)"
+                                Port="47101"
+                                Protocol="tcp"
+                                Profile="private"
+                                Scope="any" />
+        <fire:FirewallException Id="FirewallDiscoveryUdpDomain"
+                                Name="PC Wake Controller Agent Discovery (Domain)"
+                                Port="47100"
+                                Protocol="udp"
+                                Profile="domain"
+                                Scope="any" />
+        <fire:FirewallException Id="FirewallDiscoveryUdpPrivate"
+                                Name="PC Wake Controller Agent Discovery (Private)"
+                                Port="47100"
+                                Protocol="udp"
+                                Profile="private"
+                                Scope="any" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>

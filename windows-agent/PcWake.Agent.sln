@@ -1,0 +1,50 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{CF88D60D-75D3-4A2E-8DE5-42B70D94C4FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PcWake.Agent.Core", "src\PcWake.Agent.Core\PcWake.Agent.Core.csproj", "{816BA4E0-D801-4D43-A170-9FE6187B394A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PcWake.Agent.Service", "src\PcWake.Agent.Service\PcWake.Agent.Service.csproj", "{2278D266-5363-4FD7-B6A0-A11FC58C9A62}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PcWake.Agent.Tray", "src\PcWake.Agent.Tray\PcWake.Agent.Tray.csproj", "{F0D38EA2-241A-4F30-AA73-6C73FC6A461D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{F70EA8A5-E866-46F0-97CD-734BA7176E69}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PcWake.Agent.Tests", "tests\PcWake.Agent.Tests\PcWake.Agent.Tests.csproj", "{2E08043D-2C58-453E-99CD-102256A18AB3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{816BA4E0-D801-4D43-A170-9FE6187B394A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{816BA4E0-D801-4D43-A170-9FE6187B394A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{816BA4E0-D801-4D43-A170-9FE6187B394A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{816BA4E0-D801-4D43-A170-9FE6187B394A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2278D266-5363-4FD7-B6A0-A11FC58C9A62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2278D266-5363-4FD7-B6A0-A11FC58C9A62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2278D266-5363-4FD7-B6A0-A11FC58C9A62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2278D266-5363-4FD7-B6A0-A11FC58C9A62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0D38EA2-241A-4F30-AA73-6C73FC6A461D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0D38EA2-241A-4F30-AA73-6C73FC6A461D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0D38EA2-241A-4F30-AA73-6C73FC6A461D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0D38EA2-241A-4F30-AA73-6C73FC6A461D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E08043D-2C58-453E-99CD-102256A18AB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E08043D-2C58-453E-99CD-102256A18AB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E08043D-2C58-453E-99CD-102256A18AB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E08043D-2C58-453E-99CD-102256A18AB3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{816BA4E0-D801-4D43-A170-9FE6187B394A} = {CF88D60D-75D3-4A2E-8DE5-42B70D94C4FD}
+		{2278D266-5363-4FD7-B6A0-A11FC58C9A62} = {CF88D60D-75D3-4A2E-8DE5-42B70D94C4FD}
+		{F0D38EA2-241A-4F30-AA73-6C73FC6A461D} = {CF88D60D-75D3-4A2E-8DE5-42B70D94C4FD}
+		{2E08043D-2C58-453E-99CD-102256A18AB3} = {F70EA8A5-E866-46F0-97CD-734BA7176E69}
+	EndGlobalSection
+EndGlobal

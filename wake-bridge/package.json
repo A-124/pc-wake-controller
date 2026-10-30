@@ -1,0 +1,20 @@
+{
+  "name": "pcwake-bridge",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Wake Bridge for the PC Wake Controller: HTTPS pairing, authenticated Wake-on-LAN and an allow-listed target list.",
+  "type": "module",
+  "main": "src/index.js",
+  "bin": {
+    "pcwake-bridge": "src/index.js",
+    "pcwake-bridge-admin": "src/cli.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "node --test test/protocol-vectors.test.js test/pairing.test.js test/config.test.js test/state.test.js test/auth-http.test.js test/wake-http.test.js test/rate-limit.test.js test/audit.test.js test/cli.test.js test/index-shutdown.test.js",
+    "gen-vectors": "node tools/gen-vectors.js"
+  }
+}
